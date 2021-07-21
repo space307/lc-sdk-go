@@ -197,18 +197,19 @@ func (a *API) TransferChat(chatID, targetType string, ids []interface{}, force b
 }
 
 // AddUserToChat adds user to the chat. You can't add more than one customer type user to the chat.
-func (a *API) AddUserToChat(chatID, userID, userType string) error {
-	return a.Call("add_user_to_chat", &changeChatUsersRequest{
-		ChatID:   chatID,
-		UserID:   userID,
-		UserType: userType,
+func (a *API) AddUserToChat(chatID, userID, userType, visibility string) error {
+	return a.Call("add_user_to_chat", &addUserToChatRequest{
+		ChatID:     chatID,
+		UserID:     userID,
+		UserType:   userType,
+		Visibility: visibility,
 	}, &emptyResponse{})
 }
 
 // RemoveUserFromChat Removes a user from chat. Removing customer user type is not allowed.
 // It's always possible to remove the requester from the chat.
 func (a *API) RemoveUserFromChat(chatID, userID, userType string) error {
-	return a.Call("remove_user_from_chat", &changeChatUsersRequest{
+	return a.Call("remove_user_from_chat", &removeUserFromChatRequest{
 		ChatID:   chatID,
 		UserID:   userID,
 		UserType: userType,

@@ -96,12 +96,17 @@ type transferChatRequest struct {
 	Force  bool            `json:"force"`
 }
 
-// used to add and remove user from chat
-type changeChatUsersRequest struct {
-	ChatID              string `json:"chat_id"`
-	UserID              string `json:"user_id"`
-	UserType            string `json:"user_type"` //todo - should be enum?
-	RequireActiveThread bool   `json:"require_active_thread"`
+type addUserToChatRequest struct {
+	ChatID     string `json:"chat_id"`
+	UserID     string `json:"user_id"`
+	UserType   string `json:"user_type"`
+	Visibility string `json:"visibility"`
+}
+
+type removeUserFromChatRequest struct {
+	ChatID   string `json:"chat_id"`
+	UserID   string `json:"user_id"`
+	UserType string `json:"user_type"`
 }
 
 type sendEventRequest struct {
