@@ -239,3 +239,9 @@ func (c *Chat) UnmarshalJSON(data []byte) error {
 
 	return nil
 }
+
+// TransferChatOptions defines options for TransferChat method.
+type TransferChatOptions struct {
+	IgnoreRequesterPresence  bool
+	IgnoreAgentsAvailability bool
+}

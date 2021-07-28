@@ -613,7 +613,7 @@ func TestDeactivateChatShouldReturnDataReceivedFromAgentAPI(t *testing.T) {
 		t.Errorf("API creation failed")
 	}
 
-	rErr := api.DeactivateChat("stubChatID")
+	rErr := api.DeactivateChat("stubChatID", false)
 	if rErr != nil {
 		t.Errorf("DeactivateChat failed: %v", rErr)
 	}
@@ -673,7 +673,7 @@ func TestAddUserToChatShouldReturnDataReceivedFromAgentAPI(t *testing.T) {
 		t.Errorf("API creation failed")
 	}
 
-	rErr := api.AddUserToChat("chat", "user", "agent", "all")
+	rErr := api.AddUserToChat("chat", "user", "agent", "all", false)
 	if rErr != nil {
 		t.Errorf("AddUserToChat failed: %v", rErr)
 	}
@@ -687,7 +687,7 @@ func TestRemoveUserFromChatShouldReturnDataReceivedFromAgentAPI(t *testing.T) {
 		t.Errorf("API creation failed")
 	}
 
-	rErr := api.RemoveUserFromChat("chat", "user", "agent")
+	rErr := api.RemoveUserFromChat("chat", "user", "agent", false)
 	if rErr != nil {
 		t.Errorf("RemoveUserFromChat failed: %v", rErr)
 	}
@@ -998,7 +998,7 @@ func TestTransferChatShouldReturnDataReceivedFromAgentAPI(t *testing.T) {
 
 	ids := make([]interface{}, 1)
 	ids[0] = "1"
-	rErr := api.TransferChat("stubChatID", "agents", ids, true)
+	rErr := api.TransferChat("stubChatID", "agents", ids, agent.TransferChatOptions{})
 	if rErr != nil {
 		t.Errorf("TransferChat failed: %v", rErr)
 	}
@@ -1098,7 +1098,7 @@ func TestDeactivateChatShouldNotCrashOnErrorResponse(t *testing.T) {
 		t.Errorf("API creation failed")
 	}
 
-	rErr := api.DeactivateChat("stubChatID")
+	rErr := api.DeactivateChat("stubChatID", false)
 	verifyErrorResponse("DeactivateChat", rErr, t)
 }
 
@@ -1147,7 +1147,7 @@ func TestAddUserToChatShouldNotCrashOnErrorResponse(t *testing.T) {
 		t.Errorf("API creation failed")
 	}
 
-	rErr := api.AddUserToChat("chat", "user", "agent", "all")
+	rErr := api.AddUserToChat("chat", "user", "agent", "all", false)
 	verifyErrorResponse("AddUserToChat", rErr, t)
 }
 
@@ -1159,7 +1159,7 @@ func TestRemoveUserFromChatShouldNotCrashOnErrorResponse(t *testing.T) {
 		t.Errorf("API creation failed")
 	}
 
-	rErr := api.RemoveUserFromChat("chat", "user", "agent")
+	rErr := api.RemoveUserFromChat("chat", "user", "agent", false)
 	verifyErrorResponse("RemoveUserFromChat", rErr, t)
 
 }
@@ -1376,7 +1376,7 @@ func TestTransferChatShouldNotCrashOnErrorResponse(t *testing.T) {
 	}
 	ids := make([]interface{}, 1)
 	ids[0] = 1
-	rErr := api.TransferChat("stubChatID", "group", ids, false)
+	rErr := api.TransferChat("stubChatID", "group", ids, agent.TransferChatOptions{})
 	verifyErrorResponse("SendTypingIndicator", rErr, t)
 }
 

@@ -136,9 +136,10 @@ func (a *API) ResumeChat(initialChat *InitialChat, continuous, active bool) (thr
 
 // DeactivateChat deactivates active thread for given chat. If no thread is active, then this
 // method is a no-op.
-func (a *API) DeactivateChat(chatID string) error {
+func (a *API) DeactivateChat(chatID string, ignoreRequesterPresence bool) error {
 	return a.Call("deactivate_chat", &deactivateChatRequest{
-		ID: chatID,
+		ID:                      chatID,
+		IgnoreRequesterPresence: ignoreRequesterPresence,
 	}, &emptyResponse{})
 }
 
@@ -157,7 +158,7 @@ func (a *API) UnfollowChat(chatID string) error {
 }
 
 // TransferChat transfers chat to agent or group.
-func (a *API) TransferChat(chatID, targetType string, ids []interface{}, force bool) error {
+func (a *API) TransferChat(chatID, targetType string, ids []interface{}, opts TransferChatOptions) error {
 	var target *transferTarget
 	if targetType != "" || len(ids) > 0 {
 		target = &transferTarget{
@@ -166,29 +167,32 @@ func (a *API) TransferChat(chatID, targetType string, ids []interface{}, force b
 		}
 	}
 	return a.Call("transfer_chat", &transferChatRequest{
-		ID:     chatID,
-		Target: target,
-		Force:  force,
+		ID:                       chatID,
+		Target:                   target,
+		IgnoreRequesterPresence:  opts.IgnoreRequesterPresence,
+		IgnoreAgentsAvailability: opts.IgnoreAgentsAvailability,
 	}, &emptyResponse{})
 }
 
 // AddUserToChat adds user to the chat. You can't add more than one customer type user to the chat.
-func (a *API) AddUserToChat(chatID, userID, userType, visibility string) error {
+func (a *API) AddUserToChat(chatID, userID, userType, visibility string, ignoreRequesterPresence bool) error {
 	return a.Call("add_user_to_chat", &addUserToChatRequest{
-		ChatID:     chatID,
-		UserID:     userID,
-		UserType:   userType,
-		Visibility: visibility,
+		ChatID:                  chatID,
+		UserID:                  userID,
+		UserType:                userType,
+		Visibility:              visibility,
+		IgnoreRequesterPresence: ignoreRequesterPresence,
 	}, &emptyResponse{})
 }
 
 // RemoveUserFromChat Removes a user from chat. Removing customer user type is not allowed.
 // It's always possible to remove the requester from the chat.
-func (a *API) RemoveUserFromChat(chatID, userID, userType string) error {
+func (a *API) RemoveUserFromChat(chatID, userID, userType string, ignoreRequesterPresence bool) error {
 	return a.Call("remove_user_from_chat", &removeUserFromChatRequest{
-		ChatID:   chatID,
-		UserID:   userID,
-		UserType: userType,
+		ChatID:                  chatID,
+		UserID:                  userID,
+		UserType:                userType,
+		IgnoreRequesterPresence: ignoreRequesterPresence,
 	}, &emptyResponse{})
 }
 

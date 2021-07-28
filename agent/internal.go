@@ -73,7 +73,8 @@ type resumeChatResponse struct {
 }
 
 type deactivateChatRequest struct {
-	ID string `json:"id"`
+	ID                      string `json:"id"`
+	IgnoreRequesterPresence bool   `json:"ignore_requester_presence,omitempty"`
 }
 
 type followChatRequest struct {
@@ -85,22 +86,25 @@ type unfollowChatRequest struct {
 }
 
 type transferChatRequest struct {
-	ID     string          `json:"id"`
-	Target *transferTarget `json:"target,omitempty"`
-	Force  bool            `json:"force"`
+	ID                       string          `json:"id"`
+	Target                   *transferTarget `json:"target,omitempty"`
+	IgnoreRequesterPresence  bool            `json:"ignore_requester_presence,omitempty"`
+	IgnoreAgentsAvailability bool            `json:"ignore_agents_availability,omitempty"`
 }
 
 type addUserToChatRequest struct {
-	ChatID     string `json:"chat_id"`
-	UserID     string `json:"user_id"`
-	UserType   string `json:"user_type"`
-	Visibility string `json:"visibility"`
+	ChatID                  string `json:"chat_id"`
+	UserID                  string `json:"user_id"`
+	UserType                string `json:"user_type"`
+	Visibility              string `json:"visibility"`
+	IgnoreRequesterPresence bool   `json:"ignore_requester_presence,omitempty"`
 }
 
 type removeUserFromChatRequest struct {
-	ChatID   string `json:"chat_id"`
-	UserID   string `json:"user_id"`
-	UserType string `json:"user_type"`
+	ChatID                  string `json:"chat_id"`
+	UserID                  string `json:"user_id"`
+	UserType                string `json:"user_type"`
+	IgnoreRequesterPresence bool   `json:"ignore_requester_presence,omitempty"`
 }
 
 type sendEventRequest struct {
