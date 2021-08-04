@@ -7,6 +7,7 @@ package webhooks
 import (
 	"encoding/json"
 
+	"github.com/livechat/lc-sdk-go/v4/agent"
 	"github.com/livechat/lc-sdk-go/v4/configuration"
 	"github.com/livechat/lc-sdk-go/v4/objects"
 )
@@ -88,12 +89,12 @@ type ThreadPropertiesDeleted struct {
 
 // UserAddedToChat represents payload of user_added_to_chat webhook.
 type UserAddedToChat struct {
-	ChatID      string       `json:"chat_id"`
-	ThreadID    string       `json:"thread_id"`
-	User        objects.User `json:"user"`
-	UserType    string       `json:"user_type"`
-	Reason      string       `json:"reason"`
-	RequesterID string       `json:"requester_id"`
+	ChatID      string     `json:"chat_id"`
+	ThreadID    string     `json:"thread_id"`
+	User        agent.User `json:"user"`
+	UserType    string     `json:"user_type"`
+	Reason      string     `json:"reason"`
+	RequesterID string     `json:"requester_id"`
 }
 
 // UserRemovedFromChat represents payload of user_removed_from_chat webhook.

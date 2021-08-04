@@ -23,7 +23,7 @@ type getChatRequest struct {
 }
 
 type getChatResponse struct {
-	Chat objects.Chat `json:"chat"`
+	Chat Chat `json:"chat"`
 }
 
 type listThreadsRequest struct {
@@ -45,7 +45,7 @@ type listArchivesRequest struct {
 }
 
 type listArchivesResponse struct {
-	Chats      []objects.Chat     `json:"chats"`
+	Chats      []Chat             `json:"chats"`
 	Pagination paginationResponse `json:"pagination"`
 }
 
@@ -186,9 +186,9 @@ type listCustomersRequest struct {
 
 type listCustomersResponse struct {
 	hashedPaginationResponse
-	Customers        []objects.Customer `json:"customers"`
-	TotalCustomers   uint               `json:"total_customers"`
-	LimitedCustomers uint               `json:"limited_customers"`
+	Customers        []Customer `json:"customers"`
+	TotalCustomers   uint       `json:"total_customers"`
+	LimitedCustomers uint       `json:"limited_customers"`
 }
 
 type createCustomerRequest struct {
@@ -227,7 +227,7 @@ type markEventsAsSeenRequest struct {
 
 type sendTypingIndicatorRequest struct {
 	ChatID     string `json:"chat_id"`
-	Recipients string `json:"recipients,omitempty"`
+	Visibility string `json:"visibility,omitempty"`
 	IsTyping   bool   `json:"is_typing"`
 }
 

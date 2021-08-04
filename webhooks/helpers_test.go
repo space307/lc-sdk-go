@@ -120,7 +120,7 @@ func incomingEvent(ctx context.Context, wh *webhooks.Webhook) error {
 	propEq("Event.Type", e.Type, "message", &errors)
 	propEq("Event.Text", e.Text, "14", &errors)
 	propEq("Event.CustomID", e.CustomID, "1dnepb4z00t", &errors)
-	propEq("Event.Recipients", e.Recipients, "all", &errors)
+	propEq("Event.Visibility", e.Visibility, "all", &errors)
 	propEq("Event.CreatedAt", e.CreatedAt.String(), "2019-10-11 09:41:00.877 +0000 UTC", &errors)
 	propEq("Event.AuthorID", e.AuthorID, "345f8235-d60d-433e-63c5-7f813a6ffe25", &errors)
 
@@ -145,7 +145,7 @@ func eventUpdated(ctx context.Context, wh *webhooks.Webhook) error {
 	propEq("Event.Type", e.Type, "message", &errors)
 	propEq("Event.Text", e.Text, "14", &errors)
 	propEq("Event.CustomID", e.CustomID, "1dnepb4z00t", &errors)
-	propEq("Event.Recipients", e.Recipients, "all", &errors)
+	propEq("Event.Visibility", e.Visibility, "all", &errors)
 	propEq("Event.CreatedAt", e.CreatedAt.String(), "2019-10-11 09:41:00.877 +0000 UTC", &errors)
 	propEq("Event.AuthorID", e.AuthorID, "345f8235-d60d-433e-63c5-7f813a6ffe25", &errors)
 

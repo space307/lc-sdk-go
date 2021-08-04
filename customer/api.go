@@ -65,8 +65,8 @@ func (a *API) StartChat(initialChat *objects.InitialChat, continuous, active boo
 // SendMessage sends event of type message to given chat.
 // It returns event ID.
 func (a *API) SendMessage(chatID, text string, recipients Recipients) (string, error) {
-	e := objects.Message{
-		Event: objects.Event{
+	e := Message{
+		Event: Event{
 			Type:       "message",
 			Recipients: string(recipients),
 		},
@@ -79,8 +79,8 @@ func (a *API) SendMessage(chatID, text string, recipients Recipients) (string, e
 // SendSystemMessage sends event of type system_message to given chat.
 // It returns event ID.
 func (a *API) SendSystemMessage(chatID, text, messageType string, textVars map[string]string, recipients Recipients, attachToLastThread bool) (string, error) {
-	e := objects.SystemMessage{
-		Event: objects.Event{
+	e := SystemMessage{
+		Event: Event{
 			Type:       "system_message",
 			Recipients: string(recipients),
 		},
@@ -97,7 +97,7 @@ func (a *API) SendSystemMessage(chatID, text, messageType string, textVars map[s
 //
 // Supported event types are: event, file, message, rich_message and system_message.
 func (a *API) SendEvent(chatID string, e interface{}, attachToLastThread bool) (string, error) {
-	if err := objects.ValidateEvent(e); err != nil {
+	if err := ValidateEvent(e); err != nil {
 		return "", err
 	}
 

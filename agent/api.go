@@ -57,8 +57,8 @@ func (a *API) ListChats(filters *chatsFilters, sortOrder, pageID string, limit u
 }
 
 // GetChat returns given thread for given chat.
-func (a *API) GetChat(chatID string, threadID string) (objects.Chat, error) {
-	var resp objects.Chat
+func (a *API) GetChat(chatID string, threadID string) (Chat, error) {
+	var resp Chat
 	err := a.Call("get_chat", &getChatRequest{
 		ChatID:   chatID,
 		ThreadID: threadID,
@@ -85,7 +85,7 @@ func (a *API) ListThreads(chatID, sortOrder, pageID string, limit, minEventsCoun
 }
 
 // ListArchives returns archived chats.
-func (a *API) ListArchives(filters *archivesFilters, page, limit uint) (chats []objects.Chat, currentPage, totalPages uint, err error) {
+func (a *API) ListArchives(filters *archivesFilters, page, limit uint) (chats []Chat, currentPage, totalPages uint, err error) {
 	var resp listArchivesResponse
 	err = a.Call("list_archives", &listArchivesRequest{
 		Filters: filters,
@@ -321,8 +321,8 @@ func (a *API) UntagThread(chatID, threadID, tag string) error {
 }
 
 // GetCustomer returns Customer.
-func (a *API) GetCustomer(customerID string) (customer objects.Customer, err error) {
-	var resp objects.Customer
+func (a *API) GetCustomer(customerID string) (customer Customer, err error) {
+	var resp Customer
 	err = a.Call("get_customer", &getCustomersRequest{
 		ID: customerID,
 	}, &resp)
@@ -331,7 +331,7 @@ func (a *API) GetCustomer(customerID string) (customer objects.Customer, err err
 }
 
 // ListCustomers returns the list of Customers.
-func (a *API) ListCustomers(limit uint, pageID, sortOrder, sortBy string, filters *customersFilters) (customers []objects.Customer, total uint, limited uint, previousPage, nextPage string, err error) {
+func (a *API) ListCustomers(limit uint, pageID, sortOrder, sortBy string, filters *customersFilters) (customers []Customer, total uint, limited uint, previousPage, nextPage string, err error) {
 	var resp listCustomersResponse
 	err = a.Call("list_customers", &listCustomersRequest{
 		PageID:    pageID,
@@ -395,10 +395,10 @@ func (a *API) MarkEventsAsSeen(chatID string, seenUpTo time.Time) error {
 }
 
 // SendTypingIndicator sends a notification about typing to defined recipients.
-func (a *API) SendTypingIndicator(chatID, recipients string, isTyping bool) error {
+func (a *API) SendTypingIndicator(chatID, visibility string, isTyping bool) error {
 	return a.Call("send_typing_indicator", &sendTypingIndicatorRequest{
 		ChatID:     chatID,
-		Recipients: recipients,
+		Visibility: visibility,
 		IsTyping:   isTyping,
 	}, &emptyResponse{})
 }

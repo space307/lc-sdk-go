@@ -105,7 +105,7 @@ var mockedResponses = map[string]string{
       "events": [{
         "id": "Q20N9CKRX2_1",
         "created_at": "2019-12-17T07:57:41.512000Z",
-        "recipients": "all",
+        "visibility": "all",
         "type": "message",
         "text": "Hello",
         "author_id": "smith@example.com"
@@ -135,7 +135,7 @@ var mockedResponses = map[string]string{
 		  "events": [{
 			"id": "Q20N9CKRX2_1",
 			"created_at": "2019-12-17T07:57:41.512000Z",
-			"recipients": "all",
+			"visibility": "all",
 			"type": "message",
 			"text": "Hello",
 			"author_id": "smith@example.com"
@@ -715,7 +715,7 @@ func TestAddUserToChatShouldReturnDataReceivedFromAgentAPI(t *testing.T) {
 		t.Errorf("API creation failed")
 	}
 
-	rErr := api.AddUserToChat("chat", "user", "agent")
+	rErr := api.AddUserToChat("chat", "user", "agent", "all")
 	if rErr != nil {
 		t.Errorf("AddUserToChat failed: %v", rErr)
 	}
@@ -1225,7 +1225,7 @@ func TestAddUserToChatShouldNotCrashOnErrorResponse(t *testing.T) {
 		t.Errorf("API creation failed")
 	}
 
-	rErr := api.AddUserToChat("chat", "user", "agent")
+	rErr := api.AddUserToChat("chat", "user", "agent", "all")
 	verifyErrorResponse("AddUserToChat", rErr, t)
 }
 

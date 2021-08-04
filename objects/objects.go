@@ -339,7 +339,7 @@ type Event struct {
 	CreatedAt  time.Time  `json:"created_at,omitempty"`
 	AuthorID   string     `json:"author_id"`
 	Properties Properties `json:"properties,omitempty"`
-	Recipients string     `json:"recipients,omitempty"`
+	Visibility string     `json:"visibility,omitempty"`
 	Type       string     `json:"type,omitempty"`
 	eventSpecific
 }
