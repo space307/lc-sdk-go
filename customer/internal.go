@@ -1,6 +1,8 @@
 package customer
 
 import (
+	"fmt"
+
 	"github.com/livechat/lc-sdk-go/v4/objects"
 )
 
@@ -223,4 +225,23 @@ type getLocalizationRequest struct {
 	GroupID  int    `url:"group_id"`
 	Language string `url:"language"`
 	Version  string `url:"version"`
+}
+
+func ValidateEvent(e interface{}) error {
+	switch v := e.(type) {
+	case *Event:
+	case *File:
+	case *Message:
+	case *RichMessage:
+	case *SystemMessage:
+	case Event:
+	case File:
+	case Message:
+	case RichMessage:
+	case SystemMessage:
+	default:
+		return fmt.Errorf("event type %T not supported", v)
+	}
+
+	return nil
 }

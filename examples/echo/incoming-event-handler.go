@@ -47,7 +47,7 @@ func (h *IncomingEventHandler) Handle(ctx context.Context, wh *webhooks.Webhook)
 	msg := &objects.Message{
 		Event: objects.Event{
 			Type:       "message",
-			Recipients: "all",
+			Visibility: "all",
 		},
 		Text: "You said: " + payload.Event.Message().Text,
 	}
