@@ -1,5 +1,7 @@
 # LiveChat SDK in Go
 
+## [Warning] This version is deprecated. It will be decommissioned after 2022-03-31
+
 [![Go Report Card](https://goreportcard.com/badge/github.com/livechat/lc-sdk-go)](https://goreportcard.com/report/github.com/livechat/lc-sdk-go)
 [![GoDoc](https://godoc.org/github.com/livechat/lc-sdk-go?status.svg)](https://godoc.org/github.com/livechat/lc-sdk-go)
 

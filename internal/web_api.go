@@ -6,12 +6,13 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"mime/multipart"
 	"net/http"
 	"time"
 
-	api_errors "github.com/livechat/lc-sdk-go/errors"
 	"github.com/livechat/lc-sdk-go/authorization"
+	api_errors "github.com/livechat/lc-sdk-go/errors"
 )
 
 const apiVersion = "3.1"
@@ -32,6 +33,8 @@ type API struct {
 //
 // If provided client is nil, then default http client with 20s timeout is used.
 func NewAPI(t authorization.TokenGetter, client *http.Client, clientID, name string) (*API, error) {
+	log.Printf("[Warning] This version is deprecated. It will be decommissioned after 2022-03-31.")
+
 	if t == nil {
 		return nil, errors.New("cannot initialize api without TokenGetter")
 	}
