@@ -17,7 +17,7 @@ type Webhook struct {
 	WebhookID      string          `json:"webhook_id"`
 	SecretKey      string          `json:"secret_key"`
 	Action         string          `json:"action"`
-	LicenseID      int             `json:"license_id"`
+	OrganizationID string          `json:"organization_id"`
 	AdditionalData json.RawMessage `json:"additional_data"`
 	RawPayload     json.RawMessage `json:"payload"`
 	Payload        interface{}

@@ -2,7 +2,7 @@
 	"webhook_id": "37901609f767dea5bc3a8acf5458bd80",
 	"secret_key": "dummy_key",
 	"action": "chat_transferred",
-	"license_id": 21377312,
+	"organization_id": "390e44e6-f1e6-0368c-z6ddb-74g14508c2ex",
 	"payload": {
 		"chat_id": "PJ0MRSHTDG",
 		"thread_id": "K600PKZON8",

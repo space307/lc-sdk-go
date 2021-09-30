@@ -135,7 +135,7 @@ func TestPayloadParsingOK(t *testing.T) {
 	withLicenseCheck := func(verifier webhooks.Handler) webhooks.Handler {
 		return func(ctx context.Context, wh *webhooks.Webhook) error {
 			var errors string
-			propEq("LicenseID", wh.LicenseID, 21377312, &errors)
+			propEq("OrganizationID", wh.OrganizationID, "390e44e6-f1e6-0368c-z6ddb-74g14508c2ex", &errors)
 			if errors != "" {
 				return fmt.Errorf(errors)
 			}
