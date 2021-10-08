@@ -27,8 +27,8 @@ type API struct {
 func CustomerEndpointGenerator(r i.HTTPEndpointGenerator) i.HTTPEndpointGenerator {
 	return func(t *authorization.Token, h, a string) string {
 		endpoint := r(t, h, a)
-		if t.LicenseID != nil {
-			endpoint += fmt.Sprintf("?license_id=%v", *t.LicenseID)
+		if t.OrganizationID != "" {
+			endpoint += fmt.Sprintf("?organization_id=%s", t.OrganizationID)
 		}
 		return endpoint
 	}
