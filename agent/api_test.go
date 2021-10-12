@@ -32,9 +32,7 @@ func stubBearerTokenGetter() *authorization.Token {
 
 func stubTokenGetter(tokenType authorization.TokenType) func() *authorization.Token {
 	return func() *authorization.Token {
-		licenseID := 12345
 		return &authorization.Token{
-			LicenseID:   &licenseID,
 			AccessToken: "access_token",
 			Region:      "region",
 			Type:        tokenType,

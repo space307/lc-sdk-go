@@ -23,9 +23,7 @@ func NewTestClient(fn roundTripFunc) *http.Client {
 }
 
 func stubTokenGetter() *authorization.Token {
-	licenseID := 12345
 	return &authorization.Token{
-		LicenseID:   &licenseID,
 		AccessToken: "access_token",
 		Region:      "region",
 	}
