@@ -28,11 +28,10 @@ func NewTestClient(fn roundTripFunc) *http.Client {
 }
 
 func stubTokenGetter() *authorization.Token {
-	licenseID := 12345
 	return &authorization.Token{
-		LicenseID:   &licenseID,
-		AccessToken: "access_token",
-		Region:      "region",
+		AccessToken:    "access_token",
+		Region:         "region",
+		OrganizationID: "xD",
 	}
 }
 
@@ -351,7 +350,7 @@ func createMockedResponder(t *testing.T, method string) roundTripFunc {
 			t.Errorf("Invalid URL for Customer API request: %s", req.URL.String())
 			return createServerError("Invalid URL")
 		}
-		if req.URL.Query().Get("license_id") != "12345" {
+		if req.URL.Query().Get("organization_id") != "xD" {
 			t.Errorf("Invalid URL for Customer API request: %s", req.URL.String())
 			return createServerError("Invalid URL")
 		}

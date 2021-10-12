@@ -56,6 +56,7 @@ type URLInfo struct {
 
 type DynamicConfiguration struct {
 	GroupID             int    `json:"group_id"`
+	OrganizationID      string `json:"organization_id"`
 	ClientLimitExceeded bool   `json:"client_limit_exceeded"`
 	DomainAllowed       bool   `json:"domain_allowed"`
 	ConfigVersion       string `json:"config_version"`
