@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"io/ioutil"
 	"net/http"
+	"strings"
 	"testing"
 
 	"github.com/livechat/lc-sdk-go/v4/authorization"
@@ -252,6 +253,8 @@ var mockedResponses = map[string]string{
 			"next_id": "pqi8oasdjahuakndw9nsad9na"
 		}
 	]`,
+	"get_organization_id": `{ "organization_id": "23413683-9ca5-4823-8282-47b0e5be5f79" }`,
+	"get_license_id":      `{ "license_id": 100000000 }`,
 }
 
 func createMockedResponder(t *testing.T, method string) roundTripFunc {
@@ -271,12 +274,22 @@ func createMockedResponder(t *testing.T, method string) roundTripFunc {
 			}
 		}
 
-		if req.URL.String() != "https://api.livechatinc.com/v3.4/configuration/action/"+method {
+		expectedMethod := http.MethodPost
+		if method == "get_organization_id" || method == "get_license_id" {
+			expectedMethod = http.MethodGet
+		}
+
+		url := "https://api.livechatinc.com/v3.4/configuration/action/" + method
+		if expectedMethod == http.MethodGet && !strings.Contains(req.URL.String(), url) {
+			t.Errorf("Invalid URL for Configuration API request: %s", req.URL.String())
+			return createServerError("Invalid URL")
+		}
+		if expectedMethod == http.MethodPost && req.URL.String() != url {
 			t.Errorf("Invalid URL for Configuration API request: %s", req.URL.String())
 			return createServerError("Invalid URL")
 		}
 
-		if req.Method != "POST" {
+		if req.Method != expectedMethod {
 			t.Errorf("Invalid method: %s for Configuration API action: %s", req.Method, method)
 			return createServerError("Invalid URL")
 		}
@@ -1053,5 +1066,39 @@ func TestListAutoAccessesShouldReturnDataReceivedFromConfAPI(t *testing.T) {
 
 	if len(resp[0].Conditions.Geolocation.Values) != 1 || resp[0].Conditions.Geolocation.Values[0].Country != "United States" || resp[0].Conditions.Geolocation.Values[0].CountryCode != "US" {
 		t.Errorf("Invalid response geolocation values: %v", resp[0].Conditions.Geolocation.Values)
+	}
+}
+
+func TestGetOrganizationID(t *testing.T) {
+	client := NewTestClient(createMockedResponder(t, "get_organization_id"))
+
+	api, err := configuration.NewAPI(stubTokenGetter, client, "client_id")
+	if err != nil {
+		t.Errorf("API creation failed")
+	}
+
+	resp, err := api.GetOrganizationID(10000000)
+	if err != nil {
+		t.Errorf("GetOrganizationID failed: %v", err)
+	}
+	if resp != "23413683-9ca5-4823-8282-47b0e5be5f79" {
+		t.Errorf("Invalid response `organization_id`: %v", resp)
+	}
+}
+
+func TestGetLicenseID(t *testing.T) {
+	client := NewTestClient(createMockedResponder(t, "get_license_id"))
+
+	api, err := configuration.NewAPI(stubTokenGetter, client, "client_id")
+	if err != nil {
+		t.Errorf("API creation failed")
+	}
+
+	resp, err := api.GetLicenseID("23413683-9ca5-4823-8282-47b0e5be5f79")
+	if err != nil {
+		t.Errorf("GetLicenseID failed: %v", err)
+	}
+	if resp != 100000000 {
+		t.Errorf("Invalid response `license_id`: %v", resp)
 	}
 }
