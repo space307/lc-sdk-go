@@ -211,3 +211,19 @@ type deleteAutoAccessRequest struct {
 
 type listAutoAccessesRequest struct {
 }
+
+type getOrganizationIDRequest struct {
+	LicenseID int32 `url:"license_id"`
+}
+
+type getOrganizationIDResponse struct {
+	OrganizationID string `json:"organization_id"`
+}
+
+type getLicenseIDRequest struct {
+	OrganizationID string `url:"organization_id"`
+}
+
+type getLicenseIDResponse struct {
+	LicenseID int32 `json:"license_id"`
+}

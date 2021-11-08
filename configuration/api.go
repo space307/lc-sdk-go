@@ -466,3 +466,17 @@ func (a *API) ListAutoAccesses() ([]*AutoAccess, error) {
 	err := a.Call("list_auto_accesses", &listAutoAccessesRequest{}, &resp)
 	return resp, err
 }
+
+// GetOrganizationID returns organization ID of given license ID.
+func (a *API) GetOrganizationID(licenseID int32) (string, error) {
+	var resp getOrganizationIDResponse
+	err := a.Call("get_organization_id", &getOrganizationIDRequest{LicenseID: licenseID}, &resp, &i.CallOptions{Method: http.MethodGet})
+	return resp.OrganizationID, err
+}
+
+// GetLicenseID returns license ID of given organization ID.
+func (a *API) GetLicenseID(organizationID string) (int32, error) {
+	var resp getLicenseIDResponse
+	err := a.Call("get_license_id", &getLicenseIDRequest{OrganizationID: organizationID}, &resp, &i.CallOptions{Method: http.MethodGet})
+	return resp.LicenseID, err
+}
