@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"mime/multipart"
 	"net/http"
 	"time"
@@ -230,6 +231,13 @@ func (a *api) send(req *http.Request, respPayload interface{}) error {
 
 		if err != nil {
 			return err
+		}
+
+		if h := resp.Header.Get("Legacy"); h != "" {
+			log.Printf("[Notice] This version is legacy. It will be deprecated after %s.", h)
+		}
+		if h := resp.Header.Get("Deprecation"); h != "" {
+			log.Printf("[Warning] This version is deprecated. It will be decommissioned after %s.", h)
 		}
 
 		return json.Unmarshal(bodyBytes, respPayload)
