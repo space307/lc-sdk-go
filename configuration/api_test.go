@@ -274,22 +274,22 @@ func createMockedResponder(t *testing.T, method string) roundTripFunc {
 			}
 		}
 
-		expectedMethod := http.MethodPost
+		expectedHTTPMethod := http.MethodPost
 		if method == "get_organization_id" || method == "get_license_id" {
-			expectedMethod = http.MethodGet
+			expectedHTTPMethod = http.MethodGet
 		}
 
 		url := "https://api.livechatinc.com/v3.4/configuration/action/" + method
-		if expectedMethod == http.MethodGet && !strings.Contains(req.URL.String(), url) {
+		if expectedHTTPMethod == http.MethodGet && !strings.HasPrefix(req.URL.String(), url) {
 			t.Errorf("Invalid URL for Configuration API request: %s", req.URL.String())
 			return createServerError("Invalid URL")
 		}
-		if expectedMethod == http.MethodPost && req.URL.String() != url {
+		if expectedHTTPMethod == http.MethodPost && req.URL.String() != url {
 			t.Errorf("Invalid URL for Configuration API request: %s", req.URL.String())
 			return createServerError("Invalid URL")
 		}
 
-		if req.Method != expectedMethod {
+		if req.Method != expectedHTTPMethod {
 			t.Errorf("Invalid method: %s for Configuration API action: %s", req.Method, method)
 			return createServerError("Invalid URL")
 		}
