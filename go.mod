@@ -1,4 +1,4 @@
-module github.com/livechat/lc-sdk-go/v4
+module github.com/livechat/lc-sdk-go/v5
 
 go 1.12
 

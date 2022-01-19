@@ -3,7 +3,7 @@ package customer
 import (
 	"fmt"
 
-	"github.com/livechat/lc-sdk-go/v4/objects"
+	"github.com/livechat/lc-sdk-go/v5/objects"
 )
 
 type startChatRequest struct {

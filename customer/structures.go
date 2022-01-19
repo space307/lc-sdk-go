@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/livechat/lc-sdk-go/v4/objects"
+	"github.com/livechat/lc-sdk-go/v5/objects"
 )
 
 func unmarshalOptionalRawField(source json.RawMessage, target interface{}) error {

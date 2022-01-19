@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/livechat/lc-sdk-go/v4/authorization"
-	"github.com/livechat/lc-sdk-go/v4/customer"
-	"github.com/livechat/lc-sdk-go/v4/objects"
+	"github.com/livechat/lc-sdk-go/v5/authorization"
+	"github.com/livechat/lc-sdk-go/v5/customer"
+	"github.com/livechat/lc-sdk-go/v5/objects"
 )
 
 // TEST HELPERS

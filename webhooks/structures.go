@@ -7,9 +7,9 @@ package webhooks
 import (
 	"encoding/json"
 
-	"github.com/livechat/lc-sdk-go/v4/agent"
-	"github.com/livechat/lc-sdk-go/v4/configuration"
-	"github.com/livechat/lc-sdk-go/v4/objects"
+	"github.com/livechat/lc-sdk-go/v5/agent"
+	"github.com/livechat/lc-sdk-go/v5/configuration"
+	"github.com/livechat/lc-sdk-go/v5/objects"
 )
 
 // Webhook represents general webhook format.

@@ -1,6 +1,6 @@
 package configuration
 
-import "github.com/livechat/lc-sdk-go/v4/objects"
+import "github.com/livechat/lc-sdk-go/v5/objects"
 
 type registerWebhookRequest struct {
 	*Webhook
