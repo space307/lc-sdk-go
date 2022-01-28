@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 
 	"github.com/livechat/lc-sdk-go/v5/webhooks"
@@ -55,7 +55,7 @@ func TestRejectWebhooksIfNoHandlersAreConnected(t *testing.T) {
 	cfg := webhooks.NewConfiguration()
 	h := webhooks.NewWebhookHandler(cfg)
 	action := "incoming_chat"
-	payload, err := ioutil.ReadFile("./testdata/" + action + ".json")
+	payload, err := os.ReadFile("./testdata/" + action + ".json")
 	if err != nil {
 		t.Errorf("Missing test payload for action %v", action)
 		return
@@ -71,7 +71,7 @@ func TestRejectWebhooksIfNoHandlersAreConnected(t *testing.T) {
 
 func TestRejectWebhooksIfFormatIsInvalid(t *testing.T) {
 	action := "incoming_chat"
-	payload, err := ioutil.ReadFile("./testdata/" + action + ".json")
+	payload, err := os.ReadFile("./testdata/" + action + ".json")
 	if err != nil {
 		t.Errorf("Missing test payload for action %v", action)
 		return
@@ -90,7 +90,7 @@ func TestRejectWebhooksIfFormatIsInvalid(t *testing.T) {
 
 func TestErrorHappensWithCustomErrorHandler(t *testing.T) {
 	action := "incoming_chat"
-	payload, err := ioutil.ReadFile("./testdata/" + action + ".json")
+	payload, err := os.ReadFile("./testdata/" + action + ".json")
 	if err != nil {
 		t.Errorf("Missing test payload for action %v", action)
 		return
@@ -117,7 +117,7 @@ func TestRejectWebhooksIfSecretKeyDoesntMatch(t *testing.T) {
 	action := "incoming_chat"
 	cfg := webhooks.NewConfiguration().WithAction(action, verifier, "other_dummy_key")
 	h := webhooks.NewWebhookHandler(cfg)
-	payload, err := ioutil.ReadFile("./testdata/" + action + ".json")
+	payload, err := os.ReadFile("./testdata/" + action + ".json")
 	if err != nil {
 		t.Errorf("Missing test payload for action %v", action)
 		return
@@ -145,7 +145,7 @@ func TestPayloadParsingOK(t *testing.T) {
 	testAction := func(action string, verifier webhooks.Handler) error {
 		cfg := webhooks.NewConfiguration().WithAction(action, withLicenseCheck(verifier), "dummy_key")
 		h := webhooks.NewWebhookHandler(cfg)
-		payload, err := ioutil.ReadFile("./testdata/" + action + ".json")
+		payload, err := os.ReadFile("./testdata/" + action + ".json")
 		if err != nil {
 			return fmt.Errorf("Missing test payload for action %v", action)
 		}
@@ -185,7 +185,7 @@ func TestHandlerContextForwardsRequestContext(t *testing.T) {
 	action := "incoming_chat"
 	cfg := webhooks.NewConfiguration().WithAction(action, verifier, "")
 	h := webhooks.NewWebhookHandler(cfg)
-	payload, err := ioutil.ReadFile("./testdata/" + action + ".json")
+	payload, err := os.ReadFile("./testdata/" + action + ".json")
 	if err != nil {
 		t.Errorf("Missing test payload for action %v", action)
 		return
