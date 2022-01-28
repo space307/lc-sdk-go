@@ -2,7 +2,7 @@ package agent_test
 
 import (
 	"bytes"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"testing"
 	"time"
@@ -306,7 +306,7 @@ func createMockedResponder(t *testing.T, method string) roundTripFunc {
 
 			return &http.Response{
 				StatusCode: 400,
-				Body:       ioutil.NopCloser(bytes.NewBufferString(responseError)),
+				Body:       io.NopCloser(bytes.NewBufferString(responseError)),
 				Header:     make(http.Header),
 			}
 		}
@@ -335,7 +335,7 @@ func createMockedResponder(t *testing.T, method string) roundTripFunc {
 
 		return &http.Response{
 			StatusCode: 200,
-			Body:       ioutil.NopCloser(bytes.NewBufferString(mockedResponses[method])),
+			Body:       io.NopCloser(bytes.NewBufferString(mockedResponses[method])),
 			Header:     make(http.Header),
 		}
 	}
@@ -352,7 +352,7 @@ func createMockedErrorResponder(t *testing.T, method string) func(req *http.Requ
 
 		return &http.Response{
 			StatusCode: 400,
-			Body:       ioutil.NopCloser(bytes.NewBufferString(responseError)),
+			Body:       io.NopCloser(bytes.NewBufferString(responseError)),
 			Header:     make(http.Header),
 		}
 	}
@@ -373,13 +373,13 @@ func createMockedMultipleAuthErrorsResponder(t *testing.T, fails int) func(req *
 		if n > fails {
 			return &http.Response{
 				StatusCode: http.StatusOK,
-				Body:       ioutil.NopCloser(bytes.NewBufferString(`{}`)),
+				Body:       io.NopCloser(bytes.NewBufferString(`{}`)),
 				Header:     make(http.Header),
 			}
 		}
 		return &http.Response{
 			StatusCode: http.StatusUnauthorized,
-			Body:       ioutil.NopCloser(bytes.NewBufferString(responseError)),
+			Body:       io.NopCloser(bytes.NewBufferString(responseError)),
 			Header:     make(http.Header),
 		}
 	}
@@ -412,7 +412,7 @@ func TestAuthorIDHeader(t *testing.T) {
 		}
 		return &http.Response{
 			StatusCode: 200,
-			Body:       ioutil.NopCloser(bytes.NewReader(nil)),
+			Body:       io.NopCloser(bytes.NewReader(nil)),
 			Header:     make(http.Header),
 		}
 	})
@@ -1470,7 +1470,7 @@ func TestBasicAuthorizationScheme(t *testing.T) {
 		}
 		return &http.Response{
 			StatusCode: 200,
-			Body:       ioutil.NopCloser(bytes.NewReader(nil)),
+			Body:       io.NopCloser(bytes.NewReader(nil)),
 			Header:     make(http.Header),
 		}
 	})
@@ -1490,7 +1490,7 @@ func TestBearerAuthorizationScheme(t *testing.T) {
 		}
 		return &http.Response{
 			StatusCode: 200,
-			Body:       ioutil.NopCloser(bytes.NewReader(nil)),
+			Body:       io.NopCloser(bytes.NewReader(nil)),
 			Header:     make(http.Header),
 		}
 	})
