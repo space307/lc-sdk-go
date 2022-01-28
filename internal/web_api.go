@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"mime/multipart"
 	"net/http"
@@ -107,7 +106,7 @@ func (a *api) Call(action string, reqPayload interface{}, respPayload interface{
 			return err
 		}
 		req.GetBody = func() (io.ReadCloser, error) {
-			return ioutil.NopCloser(bytes.NewReader(rawBody)), nil
+			return io.NopCloser(bytes.NewReader(rawBody)), nil
 		}
 		req.Body, _ = req.GetBody()
 	}
@@ -188,7 +187,7 @@ func (a *fileUploadAPI) UploadFile(filename string, file []byte) (string, error)
 	}
 
 	req.GetBody = func() (io.ReadCloser, error) {
-		return ioutil.NopCloser(bytes.NewReader(body.Bytes())), nil
+		return io.NopCloser(bytes.NewReader(body.Bytes())), nil
 	}
 	req.Body, _ = req.GetBody()
 
@@ -218,7 +217,7 @@ func (a *api) send(req *http.Request, respPayload interface{}) error {
 			return err
 		}
 		defer resp.Body.Close()
-		bodyBytes, err := ioutil.ReadAll(resp.Body)
+		bodyBytes, err := io.ReadAll(resp.Body)
 		if resp.StatusCode != http.StatusOK {
 			apiErr := &api_errors.ErrAPI{}
 			if err := json.Unmarshal(bodyBytes, apiErr); err != nil {

@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -68,7 +68,7 @@ func (cfg *Configuration) WithErrorHandler(h ErrorHandler) *Configuration {
 // those structures into webhook Handlers attached to given webhook type.
 func NewWebhookHandler(cfg *Configuration) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			cfg.handleError(w, fmt.Sprintf("couldn't read request body: %v", err), http.StatusInternalServerError)
 			return
