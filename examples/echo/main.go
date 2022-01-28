@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -18,7 +18,7 @@ func fillConfig(cfg *Configuration) {
 	}
 	defer f.Close()
 
-	config, err := ioutil.ReadAll(f)
+	config, err := io.ReadAll(f)
 	if err != nil {
 		log.Fatal(err)
 	}
