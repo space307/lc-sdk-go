@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"mime/multipart"
 	"net/http"
@@ -132,7 +132,7 @@ func (a *API) send(req *http.Request, respPayload interface{}) error {
 		return err
 	}
 	defer resp.Body.Close()
-	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	bodyBytes, err := io.ReadAll(resp.Body)
 	if resp.StatusCode != http.StatusOK {
 		apiErr := &api_errors.ErrAPI{}
 		if err := json.Unmarshal(bodyBytes, apiErr); err != nil {
