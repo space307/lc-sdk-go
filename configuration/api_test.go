@@ -2,7 +2,7 @@ package configuration_test
 
 import (
 	"bytes"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"testing"
 
@@ -268,7 +268,7 @@ func createMockedResponder(t *testing.T, method string) roundTripFunc {
 
 			return &http.Response{
 				StatusCode: 400,
-				Body:       ioutil.NopCloser(bytes.NewBufferString(responseError)),
+				Body:       io.NopCloser(bytes.NewBufferString(responseError)),
 				Header:     make(http.Header),
 			}
 		}
@@ -297,7 +297,7 @@ func createMockedResponder(t *testing.T, method string) roundTripFunc {
 
 		return &http.Response{
 			StatusCode: 200,
-			Body:       ioutil.NopCloser(bytes.NewBufferString(mockedResponses[method])),
+			Body:       io.NopCloser(bytes.NewBufferString(mockedResponses[method])),
 			Header:     make(http.Header),
 		}
 	}
