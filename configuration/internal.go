@@ -57,17 +57,17 @@ type getBotResponse *Bot
 
 type unregisterPropertyRequest struct {
 	Name          string `json:"name"`
-	OwnerClientID string `json:"owner_client_id"`
+	OwnerClientID string `json:"owner_client_id,omitempty"`
 }
 
 type publishPropertyRequest struct {
 	Name          string   `json:"name"`
-	OwnerClientID string   `json:"owner_client_id"`
+	OwnerClientID string   `json:"owner_client_id,omitempty"`
 	AccessType    []string `json:"access_type"`
 }
 
 type listPropertiesRequest struct {
-	OwnerClientID string `json:"owner_client_id"`
+	OwnerClientID string `json:"owner_client_id,omitempty"`
 }
 
 type listPropertiesResponse map[string]*PropertyConfig
