@@ -109,7 +109,7 @@ type GroupConfig struct {
 // PropertyConfig defines configuration of a property
 type PropertyConfig struct {
 	Name          string                     `json:"name"`
-	OwnerClientID string                     `json:"owner_client_id"`
+	OwnerClientID string                     `json:"owner_client_id,omitempty"`
 	Type          string                     `json:"type"`
 	Access        map[string]*PropertyAccess `json:"access"`
 	Description   string                     `json:"description,omitempty"`
