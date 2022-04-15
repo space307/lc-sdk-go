@@ -466,3 +466,19 @@ func (a *API) ListAutoAccesses() ([]*AutoAccess, error) {
 	err := a.Call("list_auto_accesses", &listAutoAccessesRequest{}, &resp)
 	return resp, err
 }
+
+// CheckProductLimitsForPlan compares your organization's current resources with a given plan and returns those which exceeded the called plan's limits.
+func (a *API) CheckProductLimitsForPlan(plan string) (PlanLimits, error) {
+	var resp PlanLimits
+	err := a.Call("check_product_limits_for_plan", &checkProductLimitsForPlanRequest{
+		Plan: plan,
+	}, &resp)
+	return resp, err
+}
+
+// ListChannels returns the summary of communication channels for your LiveChat product.
+func (a *API) ListChannels() (ChannelActivity, error) {
+	var resp ChannelActivity
+	err := a.Call("list_channels", &listChannelsRequest{}, &resp)
+	return resp, err
+}

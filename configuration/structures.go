@@ -231,3 +231,15 @@ type AutoAccess struct {
 	Description string `json:"description,omitempty"`
 	NextID      string `json:"next_id,omitempty"`
 }
+
+type PlanLimits []struct {
+	Resource     string `json:"resource"`
+	LimitBalance int32  `json:"limit_balance"`
+	Id           string `json:"id,omitempty"`
+}
+
+type ChannelActivity []struct {
+	ChannelType            string `json:"channel_type"`
+	ChannelSubtype         string `json:"channel_subtype"`
+	FirstActivityTimestamp string `json:"first_activity_timestamp"`
+}

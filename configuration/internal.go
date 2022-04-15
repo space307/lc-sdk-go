@@ -211,3 +211,10 @@ type deleteAutoAccessRequest struct {
 
 type listAutoAccessesRequest struct {
 }
+
+type checkProductLimitsForPlanRequest struct {
+	Plan string `json:"plan"`
+}
+
+type listChannelsRequest struct {
+}

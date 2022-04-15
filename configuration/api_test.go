@@ -252,6 +252,39 @@ var mockedResponses = map[string]string{
 			"next_id": "pqi8oasdjahuakndw9nsad9na"
 		}
 	]`,
+	"check_product_limits_for_plan": `[
+		{
+			"resource": "groups",
+			"limit_balance": 1
+		},
+		{
+			"resource": "groups_per_agent",
+			"limit_balance": 2,
+			"id": "user@example.com"
+		},
+		{
+			"resource": "group_chooser_groups",
+			"limit_balance": 3,
+			"id": "0"
+		}
+	]`,
+	"list_channels": `[
+		{
+			"channel_type": "code",
+			"channel_subtype": "",
+			"first_activity_timestamp": "2017-10-12T13:56:16Z"
+		},
+		{
+			"channel_type": "direct_link",
+			"channel_subtype": "",
+			"first_activity_timestamp": "2017-10-12T15:20:00Z"
+		},
+		{
+			"channel_type": "integration",
+			"channel_subtype": "c6e4f62e2a2dab12531235b12c5a2a6b",
+			"first_activity_timestamp": "2019-08-16T16:55:51Z"
+		}
+	]`,
 }
 
 func createMockedResponder(t *testing.T, method string) roundTripFunc {
@@ -1053,5 +1086,65 @@ func TestListAutoAccessesShouldReturnDataReceivedFromConfAPI(t *testing.T) {
 
 	if len(resp[0].Conditions.Geolocation.Values) != 1 || resp[0].Conditions.Geolocation.Values[0].Country != "United States" || resp[0].Conditions.Geolocation.Values[0].CountryCode != "US" {
 		t.Errorf("Invalid response geolocation values: %v", resp[0].Conditions.Geolocation.Values)
+	}
+}
+
+func TestCheckProductLimitsForPlanShouldReturnDataReceivedFromConfAPI(t *testing.T) {
+	client := NewTestClient(createMockedResponder(t, "check_product_limits_for_plan"))
+
+	api, err := configuration.NewAPI(stubTokenGetter, client, "client_id")
+	if err != nil {
+		t.Errorf("API creation failed")
+	}
+
+	planLimits, rErr := api.CheckProductLimitsForPlan("starter")
+	if rErr != nil {
+		t.Errorf("CheckProductLimitsForPlan failed: %v", rErr)
+	}
+
+	if len(planLimits) != 3 {
+		t.Errorf("Wrong number of limits: %v", len(planLimits))
+	}
+
+	if planLimits[0].Resource != "groups" {
+		t.Errorf("Invalid limit resource: %v", planLimits[0].Resource)
+	}
+
+	if planLimits[1].LimitBalance != 2 {
+		t.Errorf("Invalid limit balance: %v", planLimits[1].LimitBalance)
+	}
+
+	if planLimits[2].Id != "0" {
+		t.Errorf("Invalid limit id: %v", planLimits[2].Id)
+	}
+}
+
+func TestListChannelsShouldReturnDataReceivedFromConfAPI(t *testing.T) {
+	client := NewTestClient(createMockedResponder(t, "list_channels"))
+
+	api, err := configuration.NewAPI(stubTokenGetter, client, "client_id")
+	if err != nil {
+		t.Errorf("API creation failed")
+	}
+
+	channels, rErr := api.ListChannels()
+	if rErr != nil {
+		t.Errorf("ListChannels failed: %v", rErr)
+	}
+
+	if len(channels) != 3 {
+		t.Errorf("Wrong number of channels: %v", len(channels))
+	}
+
+	if channels[0].ChannelType != "code" {
+		t.Errorf("Invalid channel type: %v", channels[0].ChannelType)
+	}
+
+	if channels[1].FirstActivityTimestamp != "2017-10-12T15:20:00Z" {
+		t.Errorf("Invalid channel first activity timestamp: %v", channels[1].FirstActivityTimestamp)
+	}
+
+	if channels[2].ChannelSubtype != "c6e4f62e2a2dab12531235b12c5a2a6b" {
+		t.Errorf("Invalid channel subtype: %v", channels[3].ChannelSubtype)
 	}
 }
