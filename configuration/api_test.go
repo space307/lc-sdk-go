@@ -285,6 +285,27 @@ var mockedResponses = map[string]string{
 			"first_activity_timestamp": "2019-08-16T16:55:51Z"
 		}
 	]`,
+	"create_tag": `{}`,
+	"delete_tag": `{}`,
+	"list_tags": `[
+		{
+			"name": "tageroo",
+			"group_ids": [
+				0
+			],
+			"created_at": "2017-10-12T13:56:16Z",
+			"author_id": "smith@example.com"
+		},
+		{
+			"name": "tagonanza",
+			"group_ids": [
+				1
+			],
+			"created_at": "2019-08-16T16:55:51Z",
+			"author_id": "jones@example.com"
+		}
+	]`,
+	"update_tag": `{}`,
 }
 
 func createMockedResponder(t *testing.T, method string) roundTripFunc {
@@ -1146,5 +1167,78 @@ func TestListChannelsShouldReturnDataReceivedFromConfAPI(t *testing.T) {
 
 	if channels[2].ChannelSubtype != "c6e4f62e2a2dab12531235b12c5a2a6b" {
 		t.Errorf("Invalid channel subtype: %v", channels[3].ChannelSubtype)
+	}
+}
+
+func TestCreateTagShouldReturnDataReceivedFromConfApi(t *testing.T) {
+	client := NewTestClient(createMockedResponder(t, "create_tag"))
+
+	api, err := configuration.NewAPI(stubTokenGetter, client, "client_id")
+	if err != nil {
+		t.Errorf("API creation failed")
+	}
+
+	if rErr := api.CreateTag("tageroo", []int{0}); rErr != nil {
+		t.Errorf("CreateTag failed: %v", rErr)
+	}
+}
+
+func TestDeleteTagShouldReturnDataReceivedFromConfApi(t *testing.T) {
+	client := NewTestClient(createMockedResponder(t, "delete_tag"))
+
+	api, err := configuration.NewAPI(stubTokenGetter, client, "client_id")
+	if err != nil {
+		t.Errorf("API creation failed")
+	}
+
+	if rErr := api.DeleteTag("tageroo"); rErr != nil {
+		t.Errorf("DeleteTag failed: %v", rErr)
+	}
+}
+
+func TestListTagsShouldReturnDataReceivedFromConfAPI(t *testing.T) {
+	client := NewTestClient(createMockedResponder(t, "list_tags"))
+
+	api, err := configuration.NewAPI(stubTokenGetter, client, "client_id")
+	if err != nil {
+		t.Errorf("API creation failed")
+	}
+
+	resp, err := api.ListTags([]int{})
+	if err != nil {
+		t.Errorf("ListTags failed: %v", err)
+	}
+
+	if len(resp) != 2 {
+		t.Errorf("Invalid response length: %v", len(resp))
+	}
+
+	if resp[0].Name != "tageroo" {
+		t.Errorf("Invalid response name: %v", resp[0].Name)
+	}
+
+	if len(resp[0].GroupIDs) != 1 || resp[0].GroupIDs[0] != 0 {
+		t.Errorf("Invalid response group_ids: %v", resp[0].GroupIDs)
+	}
+
+	if resp[0].CreatedAt != "2017-10-12T13:56:16Z" {
+		t.Errorf("Invalid response created_at: %v", resp[0].CreatedAt)
+	}
+
+	if resp[0].AuthorID != "smith@example.com" {
+		t.Errorf("Invalid response author_id: %v", resp[0].AuthorID)
+	}
+}
+
+func TestUpdateTagShouldReturnDataReceivedFromConfApi(t *testing.T) {
+	client := NewTestClient(createMockedResponder(t, "update_tag"))
+
+	api, err := configuration.NewAPI(stubTokenGetter, client, "client_id")
+	if err != nil {
+		t.Errorf("API creation failed")
+	}
+
+	if rErr := api.UpdateTag("tageroo", []int{0}); rErr != nil {
+		t.Errorf("UpdateTag failed: %v", rErr)
 	}
 }

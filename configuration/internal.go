@@ -218,3 +218,21 @@ type checkProductLimitsForPlanRequest struct {
 
 type listChannelsRequest struct {
 }
+
+type createTagRequest struct {
+	Name     string `json:"name"`
+	GroupIDs []int  `json:"group_ids"`
+}
+
+type deleteTagRequest struct {
+	Name string `json:"name"`
+}
+
+type listTagsRequest struct {
+	GroupIDs []int `json:"group_ids"`
+}
+
+type updateTagRequest struct {
+	Name     string `json:"name"`
+	GroupIDs []int  `json:"group_ids"`
+}

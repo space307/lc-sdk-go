@@ -243,3 +243,10 @@ type ChannelActivity []struct {
 	ChannelSubtype         string `json:"channel_subtype"`
 	FirstActivityTimestamp string `json:"first_activity_timestamp"`
 }
+
+type Tag struct {
+	Name      string `json:"name"`
+	GroupIDs  []int  `json:"group_ids"`
+	CreatedAt string `json:"created_at"`
+	AuthorID  string `json:"author_id"`
+}

@@ -482,3 +482,35 @@ func (a *API) ListChannels() (ChannelActivity, error) {
 	err := a.Call("list_channels", &listChannelsRequest{}, &resp)
 	return resp, err
 }
+
+// CreateTag creates a new tag
+func (a *API) CreateTag(name string, groupIDs []int) error {
+	return a.Call("create_tag", &createTagRequest{
+		Name:     name,
+		GroupIDs: groupIDs,
+	}, &emptyResponse{})
+}
+
+// DeleteTag deletes an existing tag
+func (a *API) DeleteTag(name string) error {
+	return a.Call("delete_tag", &deleteTagRequest{
+		Name: name,
+	}, &emptyResponse{})
+}
+
+// ListTags returns tags assigned to requested groups
+func (a *API) ListTags(groupIDs []int) ([]*Tag, error) {
+	var resp []*Tag
+	err := a.Call("list_tags", &listTagsRequest{
+		GroupIDs: groupIDs,
+	}, &resp)
+	return resp, err
+}
+
+// UpdateTag updates an existing tag
+func (a *API) UpdateTag(name string, groupIDs []int) error {
+	return a.Call("update_tag", &updateTagRequest{
+		Name:     name,
+		GroupIDs: groupIDs,
+	}, &emptyResponse{})
+}
