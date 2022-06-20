@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/korableg/lc-sdk-go/v4/agent"
-	"github.com/korableg/lc-sdk-go/v4/authorization"
-	"github.com/korableg/lc-sdk-go/v4/objects"
+	"github.com/livechat/lc-sdk-go/v4/agent"
+	"github.com/livechat/lc-sdk-go/v4/authorization"
+	"github.com/livechat/lc-sdk-go/v4/objects"
 )
 
 // TEST HELPERS

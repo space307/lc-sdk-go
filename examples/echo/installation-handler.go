@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/korableg/lc-sdk-go/v4/authorization"
-	"github.com/korableg/lc-sdk-go/v4/configuration"
+	"github.com/livechat/lc-sdk-go/v4/authorization"
+	"github.com/livechat/lc-sdk-go/v4/configuration"
 )
 
 type InstallationHandler struct {
