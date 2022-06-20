@@ -9,7 +9,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/livechat/lc-sdk-go/v4/webhooks"
+	"github.com/korableg/lc-sdk-go/v4/webhooks"
 )
 
 var verifiers = map[string]webhooks.Handler{

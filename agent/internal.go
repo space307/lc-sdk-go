@@ -3,7 +3,7 @@ package agent
 import (
 	"encoding/json"
 
-	"github.com/livechat/lc-sdk-go/v4/objects"
+	"github.com/korableg/lc-sdk-go/v4/objects"
 )
 
 type listChatsRequest struct {
