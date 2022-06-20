@@ -85,17 +85,18 @@ func (a *API) ListThreads(chatID, sortOrder, pageID string, limit, minEventsCoun
 }
 
 // ListArchives returns archived chats.
-func (a *API) ListArchives(filters *archivesFilters, page, limit uint) (chats []Chat, currentPage, totalPages uint, err error) {
+func (a *API) ListArchives(filters *archivesFilters, sortOrder, pageID string, limit uint) (chats []Chat, found uint, previousPage, nextPage string, err error) {
 	var resp listArchivesResponse
 	err = a.Call("list_archives", &listArchivesRequest{
 		Filters: filters,
-		Pagination: &paginationRequest{
-			Page:  page,
-			Limit: limit,
+		hashedPaginationRequest: &hashedPaginationRequest{
+			PageID:    pageID,
+			Limit:     limit,
+			SortOrder: sortOrder,
 		},
 	}, &resp)
 
-	return resp.Chats, resp.Pagination.Page, resp.Pagination.Total, err
+	return resp.Chats, resp.FoundChats, resp.PreviousPageID, resp.NextPageID, err
 }
 
 // StartChat starts new chat with access, properties and initial thread as defined in initialChat.
