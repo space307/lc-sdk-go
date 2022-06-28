@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/livechat/lc-sdk-go/v4/configuration"
-	"github.com/livechat/lc-sdk-go/v4/webhooks"
+	"github.com/space307/lc-sdk-go/v4/configuration"
+	"github.com/space307/lc-sdk-go/v4/webhooks"
 )
 
 func propEq(propertyName string, actual, expected interface{}, validationAccumulator *string) {

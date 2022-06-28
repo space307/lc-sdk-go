@@ -4,10 +4,10 @@ import (
 	"context"
 	"errors"
 
-	"github.com/livechat/lc-sdk-go/v4/agent"
-	"github.com/livechat/lc-sdk-go/v4/authorization"
-	"github.com/livechat/lc-sdk-go/v4/objects"
-	"github.com/livechat/lc-sdk-go/v4/webhooks"
+	"github.com/space307/lc-sdk-go/v4/agent"
+	"github.com/space307/lc-sdk-go/v4/authorization"
+	"github.com/space307/lc-sdk-go/v4/objects"
+	"github.com/space307/lc-sdk-go/v4/webhooks"
 )
 
 type IncomingEventHandler struct {
